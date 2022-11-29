@@ -8,7 +8,7 @@
 
 ### Difference between `CSS px-unit` and `Attribute unit`
 
-```
+```markdown
  When resizing the canvas using CSS you are stretching (or squishing) pixels until the original drawing fits inside the new CSS dimensions. Think of that as a T-shirt with logo. If you stretch the shirt the logo will deform by stretching ... same with canvas drawings -- they stretch and shrink. On the other hand changing the canvas element width/height (canvas.width=400) you are actually adding or removing pixels to the canvas drawing surface 
 ```
 
