@@ -12,6 +12,7 @@ canvas.setAttribute('style', `width:${CANVAS_WIDTH}px; height:${CANVAS_HEIGHT}px
 
 const ctx = canvas.getContext('2d');
 
+/*
 // line
 ctx.moveTo(100, 100);
 ctx.lineTo(200, 200);
@@ -47,3 +48,38 @@ ctx.beginPath();
 ctx.arc(circleX, circleY, radius, startAngle, endAngle, true);
 ctx.fill();
 ctx.closePath();
+*/
+
+const draw = (ts) => {
+    ts /= 1000;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 80 + Math.cos(ts) * 80;
+
+    const moveX = centerX + Math.cos(ts) * radius;
+    const moveY = centerY + Math.sin(ts) * radius;
+
+    // stroke circle
+    ctx.beginPath();
+    ctx.fillStyle = "red";
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+    ctx.stroke();
+    ctx.closePath();
+
+    // first ball
+    ctx.beginPath();
+    ctx.arc(moveX, moveY, 20 + Math.cos(ts) * 15, 0, Math.PI * 2, true);
+    ctx.fill();
+
+    // second ball
+    ctx.fillStyle = 'blue';
+    ctx.beginPath();
+    ctx.arc(centerX + Math.cos(ts + Math.PI) * radius, centerY + Math.sin(ts + Math.PI) * radius, 20 + Math.cos(ts) * 15, 0, Math.PI * 2, true);
+    ctx.fill();
+
+    requestAnimationFrame(draw);
+};
+requestAnimationFrame(draw);
