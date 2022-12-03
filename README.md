@@ -39,6 +39,13 @@ canvas.height = CANVAS_HEIGHT * devicePixelRatio;
 
 // use CSS to scale to fit the size
 canvas.setAttribute('style', `width:${CANVAS_WIDTH}px; height:${CANVAS_HEIGHT}px`);
+
+// translate, rotate, rotate all canvas (depend on previous state) -> toa do cua canvas se bi dich chuyen theo
+ctx.translate(x, y)
+ctx.rotate(radian)
+
+// save() vs restore()
+// save current state to stack and restore -> pop that current out of stack
 ```
 
 ## Deployment

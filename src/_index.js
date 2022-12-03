@@ -11,6 +11,18 @@ canvas.height = CANVAS_HEIGHT * devicePixelRatio;
 canvas.setAttribute('style', `width:${CANVAS_WIDTH}px; height:${CANVAS_HEIGHT}px`);
 
 const ctx = canvas.getContext('2d');
+const mouse = {
+    x: 0,
+    y: 0
+};
+canvas.addEventListener('mousemove', (e) => {
+
+    const mouseX = e.offsetX;
+    const mouseY = e.offsetY;
+    mouse.x = mouseX;
+    mouse.y = mouseY;
+    console.log(mouse);
+});
 
 /*
 // line
@@ -53,32 +65,56 @@ ctx.closePath();
 const draw = (ts) => {
     ts /= 1000;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    /** Circle around circle
+     const centerX = canvas.width / 2;
+     const centerY = canvas.height / 2;
+     const radius = 80 + Math.cos(ts) * 80;
 
+     const moveX = centerX + Math.cos(ts) * radius;
+     const moveY = centerY + Math.sin(ts) * radius;
+
+     // stroke circle
+     ctx.beginPath();
+     ctx.fillStyle = "red";
+     ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+     ctx.stroke();
+     ctx.closePath();
+
+     // first ball
+     ctx.beginPath();
+     ctx.arc(moveX, moveY, 20 + Math.cos(ts) * 15, 0, Math.PI * 2, true);
+     ctx.fill();
+
+     // second ball
+     ctx.fillStyle = 'blue';
+     ctx.beginPath();
+     ctx.arc(centerX + Math.cos(ts + Math.PI) * radius, centerY + Math.sin(ts + Math.PI) * radius, 20 + Math.cos(ts) * 15, 0, Math.PI * 2, true);
+     ctx.fill();
+     */
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
-    const radius = 80 + Math.cos(ts) * 80;
+    const arrowWidth = 100;
 
-    const moveX = centerX + Math.cos(ts) * radius;
-    const moveY = centerY + Math.sin(ts) * radius;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // stroke circle
+    ctx.save();
+    ctx.translate(centerX, centerY);
+    ctx.rotate(Math.atan2(mouse.y - centerY, mouse.x - centerX));
     ctx.beginPath();
-    ctx.fillStyle = "red";
-    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
-    ctx.stroke();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, -10);
+    ctx.lineTo(arrowWidth / 2, -10);
+    ctx.lineTo(arrowWidth / 2, -20);
+    ctx.lineTo(arrowWidth, 0);
+    ctx.lineTo(arrowWidth / 2, 20);
+    ctx.lineTo(arrowWidth / 2, 10);
+    ctx.lineTo(0, 10);
     ctx.closePath();
-
-    // first ball
-    ctx.beginPath();
-    ctx.arc(moveX, moveY, 20 + Math.cos(ts) * 15, 0, Math.PI * 2, true);
     ctx.fill();
 
-    // second ball
-    ctx.fillStyle = 'blue';
-    ctx.beginPath();
-    ctx.arc(centerX + Math.cos(ts + Math.PI) * radius, centerY + Math.sin(ts + Math.PI) * radius, 20 + Math.cos(ts) * 15, 0, Math.PI * 2, true);
-    ctx.fill();
+    ctx.stroke();
+
+    ctx.restore();
 
     requestAnimationFrame(draw);
 };
