@@ -24,6 +24,9 @@ canvas.addEventListener('mousemove', (e) => {
     console.log(mouse);
 });
 
+let arrowX = canvas.width / 2;
+let arrowY = canvas.width / 2;
+
 /*
 // line
 ctx.moveTo(100, 100);
@@ -94,12 +97,19 @@ const draw = (ts) => {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const arrowWidth = 100;
+    const dx = mouse.x - centerX;
+    const dy = mouse.y - centerY;
+    const angle = Math.atan2(dy, dx);
+    const vX = Math.cos(angle) * 2;
+    const vY = Math.sin(angle) * 2;
+    arrowX += vX;
+    arrowY += vY;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
-    ctx.translate(centerX, centerY);
-    ctx.rotate(Math.atan2(mouse.y - centerY, mouse.x - centerX));
+    ctx.translate(arrowX, arrowY);
+    ctx.rotate(angle);
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(0, -10);
