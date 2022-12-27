@@ -24,6 +24,8 @@ canvas.addEventListener('mousemove', (e) => {
     console.log(mouse);
 });
 
+let oldTime = 0;
+
 let arrowX = canvas.width / 2;
 let arrowY = canvas.width / 2;
 
@@ -64,9 +66,12 @@ ctx.arc(circleX, circleY, radius, startAngle, endAngle, true);
 ctx.fill();
 ctx.closePath();
 */
-
+console.log('test');
 const draw = (ts) => {
     ts /= 1000;
+    let dt = ts - oldTime;
+    oldTime = ts;
+    console.log(dt);
 
     /** Circle around circle
      const centerX = canvas.width / 2;
